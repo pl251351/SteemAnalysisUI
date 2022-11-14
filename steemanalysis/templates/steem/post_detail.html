@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Details{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+        <header>
+            <div>
+                <h1>Extracted Details</h1>
+                <div class="about">from steem</div>
+            </div>
+            <div class="content">{{ records['value'] }}</div>
+            <div class="content">{{ records['text'] }}</div>
+            {% if records['url_id'] %}
+                <a class="action"
+                   href="{{ url_for('steem.extract_text', key_id=records['url_id']) }}">Import Now</a>
+
+            {% endif %}
+        </header>
+    </article>
+{% endblock %}

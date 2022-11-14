@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Details{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <h1>Total records : {{ records['total_pages'] * 10 }}</h1>
+    {% if records['records'] | length > 0 %}
+        {% if records['previous_page'] > 0 %}
+            <a class="action"
+               href="{{ url_for('steem.view_file', key_id=records.records[0]['file_name'], page=records['previous_page']) }}">Previous</a>
+        {% endif %}
+        {% if records['next_page'] > 0 %}
+            <a class="action"
+               href="{{ url_for('steem.view_file', key_id=records.records[0]['file_name'], page=records['next_page']) }}">Next</a>
+        {% endif %}
+    {% endif %}
+    {% for rec in records.records %}
+        <article class="post">
+            <header>
+                <div>
+                    <a class="action" href="{{ url_for('steem.view_post_detail', key_id=rec['id']) }}">
+                        <h1>{{ rec['post_title'] }}</h1></a>
+                    <div class="about">by {{ rec['post_author'] }}</div>
+                    <br>
+                    <a class="action" href="{{ rec['post_url'] }}">Original URL</a>
+                </div>
+                <a class="action" href="{{ url_for('steem.view_analysis', key_id=rec['id']) }}">Sentiment</a>
+                <a class="action" href="{{ url_for('steem.view_google_analysis', key_id=rec['id']) }}">Google
+                    Sentiment</a>
+                <a class="action" href="{{ url_for('steem.view_ibm_analysis', key_id=rec['id']) }}">IBM
+                    Sentiment</a>
+                <a class="action" href="{{ url_for('steem.view_textblob_analysis', key_id=rec['id']) }}">TextBlob
+                    Sentiment</a>
+                <a class="action" href="{{ url_for('steem.view_flair_analysis', key_id=rec['id']) }}">Flair
+                    Sentiment</a>
+            </header>
+            <p class="body">{{ rec['value_earned'] }} / {{ rec['id'] }}</p>
+        </article>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+    {% if records['records'] | length > 0 %}
+        {% if records['previous_page'] > 0 %}
+            <a class="action"
+               href="{{ url_for('steem.view_file', key_id=records.records[0]['file_name'], page=records['previous_page']) }}">Previous</a>
+        {% endif %}
+        {% if records['next_page'] > 0 %}
+            <a class="action"
+               href="{{ url_for('steem.view_file', key_id=records.records[0]['file_name'], page=records['next_page']) }}">Next</a>
+        {% endif %}
+    {% endif %}
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.numberofpages.label }}<br>
+            {{ form.numberofpages(size=4) }}
+        </p>
+        <p>
+            {{ form.view_all.label }}<br>
+            {{ form.view_all }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Statics Details for - {{ form.analyze_for.data }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <table>
+    <tbody>
+    <tr>
+        <td>Drop value lower than Quantile</td>
+        <td>{{ form.drop_bottom.data }}</td>
+    </tr>
+    <tr>
+        <td>Drop value higher than Quantile</td>
+        <td>{{ form.drop_top.data }}</td>
+    </tr>
+    <tr>
+        <td>Sentiment higher/lower than for Positive/Negative</td>
+        <td>{{ form.use_records_with_value.data }}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br><br>
+    <article class="post">
+        <header>
+
+            <table>
+                <tr>
+                    <td>
+                        <div class="about">Descriptive Statistics for Negative sentiment</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="content">{{ records[0]  | safe }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <div class="about">Spearman co-relation</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        <div class="content">{{ records[1] | safe }}</div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="about">pearson co-relation with -value</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="content">{{ records[2]  | safe }}</div>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                        <div class="about">Descriptive Statistics for Positive sentiment</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="content">{{ records[3]  | safe }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="about">Spearman co-relation</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="content">{{ records[4]  | safe }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="about">pearson corelation with -value</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="content">{{ records[5]  | safe }}</div>
+                    </td>
+                </tr>
+            </table>
+        </header>
+    </article>
+{% endblock %}

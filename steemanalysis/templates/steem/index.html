@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Imported Files{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% for file in file_list %}
+        <article class="post">
+            <header>
+                <div>
+                    <h1>{{ file['name'] }}</h1>
+                    <div class="about">by {{ file['name'] }}</div>
+                </div>
+                {% if file['imported'] %}
+                    <a class="action" href="{{ url_for('steem.view_file', key_id=file['name']) }}">View</a>
+                {% endif %}
+            </header>
+            <p class="body">{{ file['name'] }}</p>
+        </article>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+
+    <br>
+    <div>
+        <h1>Stats for Data collected and analyzed by sentiment analyzer</h1>
+
+        <form action="{{ url_for('steem.stat_analysis') }}" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.analyze_for.label }}<br>
+                {{ form.analyze_for(size=4) }}
+            </p>
+            <p>
+                {{ form.use_records_with_value.label }}<br>
+                {{ form.use_records_with_value(size=4) }}
+            </p>
+            <p>
+                {{ form.drop_bottom.label }}<br>
+                {{ form.drop_bottom(size=4) }}
+            </p>
+            <p>
+                {{ form.drop_top.label }}<br>
+                {{ form.drop_top(size=4) }}
+            </p>
+            <p>
+                {{ form.drop_zero_value_earned.label }}<br>
+                {{ form.drop_zero_value_earned(size=4) }}
+            </p>
+
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
+{% endblock %}
